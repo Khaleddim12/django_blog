@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{category.name}}
+{% endblock title %}
+    
+{% block content %}
+    <div class="container">
+        <h1>{{category.name}}</h1>
+
+            {% if user.is_authenticated %}
+              -<a href="{%  url 'blog_app:CategoryUpdateView' pk=category.pk  %}">(Edit)</a>
+              -<a href="{% url 'blog_app:CategoryDeleteView' pk=category.pk %}">(Delete)</a>
+            {% endif %}
+            
+        </small><br>
+        <hr>
+        <br>
+        <h2>Posts of the {{category.name}}</h2>
+
+        <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Post Title</th>
+                  <th>Author</th>
+                  <th>Category</th>
+                  <th>View Details</th>
+                  
+                  {% if user.is_authenticated %}
+                    <th>Edit Post</th>
+                    <th>Delete Post</th>
+                  {% endif %}
+                </tr>
+              </thead>
+            {% for post in category.posts.all %}
+                <tbody>
+                    <tr>
+                    <td>{{ post.id }}</td>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.author }}</td>
+                    <td>{{ post.category.name }}</td>
+                     
+                    <td>
+                        <button class="btn btn-secondary" onclick="window.location.href = '{% url 'blog_app:PostDetailView' pk=post.pk %}'">View Post Details</button>
+                    </td>
+                    {% if user.is_authenticated %}
+                        <td>
+                        <button class="btn btn-primary" onclick="window.location.href = '{% url 'blog_app:PostUpdateView' pk=post.pk %}'">Edit Post</button>
+                        </td>
+                        <td>
+                        <button class="btn btn-danger" onclick="window.location.href = '{% url 'blog_app:PostDeleteView' pk=post.pk %}'">Delete Post</button>
+                        </td>
+                    {% endif %}
+                    
+                    </tr>
+                </tbody>
+            {% endfor %}
+
+            
+        
+        <br><br>
+        <a href="{% url 'blog_app:CategoryListView' %}" class="btn btn-secondary">Go Back</a>
+    </div>
+{% endblock content%}

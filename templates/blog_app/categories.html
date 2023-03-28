@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+  <h1>Categories List</h1>
+  <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Category Title</th>
+            
+            
+            {% if user.is_authenticated %}
+              <th>Details</th>
+              <th>Delete Category</th>
+            {% endif %}
+              
+            
+
+          </tr>
+        </thead>
+        {% for category in category_list %}
+          <tbody>
+            <tr>
+              <td>{{ category.id }}</td>
+              <td>{{ category.name }}</td>
+            
+              {% if user.is_authenticated %}
+                <td>
+                  <button class="btn btn-primary" onclick="window.location.href = '{% url 'blog_app:CategoryDetailView' pk=category.pk %}'">Category Details</button>
+                </td>
+                <td>
+                  <button class="btn btn-danger" onclick="window.location.href = '{% url 'blog_app:CategoryDeleteView' pk=category.pk %}'">Delete Category</button>
+                </td>
+              {% endif %}
+              
+            </tr>
+          </tbody>
+        {% endfor %}
+      </table>
+    
+  </div>
+</div>
+{% endblock content %}
+  

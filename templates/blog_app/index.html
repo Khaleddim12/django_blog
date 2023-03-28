@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container">
+  <h1>Articles List</h1>
+  <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Post Title</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>View Details</th>
+            
+            {% if user.is_authenticated %}
+              
+                <th>Edit Post</th>
+                <th>Delete Post</th>
+            {% endif %}
+              
+            
+
+          </tr>
+        </thead>
+        {% for post in post_list %}
+          <tbody>
+            <tr>
+              <td>{{ post.id }}</td>
+              <td>{{ post.title }}</td>
+              <td>{{ post.author.username }}</td>
+              <td>{{ post.category }}</td>
+
+              <td>
+                <button class="btn btn-secondary" onclick="window.location.href = '{% url 'blog_app:PostDetailView' pk=post.pk %}'">View Post Details</button>
+              </td>
+              {% if user.is_authenticated %}
+
+                {% if user.id == post.author.id %}
+                  <td>
+                    <button class="btn btn-primary" onclick="window.location.href = '{% url 'blog_app:PostUpdateView' pk=post.pk %}'">Edit Post</button>
+                  </td>
+                  <td>
+                    <button class="btn btn-danger" onclick="window.location.href = '{% url 'blog_app:PostDeleteView' pk=post.pk %}'">Delete Post</button>
+                  </td>
+                {% endif %}
+                
+              {% endif %}
+              
+            </tr>
+          </tbody>
+        {% endfor %}
+      </table>
+    
+  </div>
+  
+    
+</div>
+{% endblock content %}
+  

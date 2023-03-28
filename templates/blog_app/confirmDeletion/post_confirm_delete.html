@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+
+  {% block content %}
+  <div class="container">
+    <h1>Delete {{post.title}}?</h1>
+    <div class="form-group">
+      <form method="post">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-danger" value="Delete" />
+        <a href="{% url 'blog_app:PostListView' %}" class="btn btn-secondary">Cancel</a>
+      </form>
+    </div>
+</div>
+  {% endblock content %}
+
