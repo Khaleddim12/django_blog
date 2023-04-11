@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     {{post.title}}
@@ -18,14 +19,11 @@
                     -<a href="{%  url 'blog_app:PostUpdateView' pk=post.pk  %}">(Edit)</a>
                     -<a href="{% url 'blog_app:PostDeleteView' pk=post.pk %}">(Delete)</a>
                 {% endif %}
-                    
-              
             {% endif %}
             
         </small><br>
         <hr>
         <br>
-        
         {% if post.image %}
             <img src="{{ post.image.url }}" width=500>
         {% else %}

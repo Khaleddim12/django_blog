@@ -1,0 +1,49 @@
+services:
+
+
+
+#postgres database
+  db:
+    restart: always
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    ports:
+      - 8001:5432
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    container_name: postgres_db
+
+  app:
+    build: .
+    container_name: django_container
+    restart: always
+    volumes:
+      - .:/django
+      - staticfiles:/django/staticfiles
+      - media:/django/mediafiles
+    ports:
+      - 8000:8000
+    image: app:django
+    command: gunicorn blog_project.wsgi --bind 0.0.0.0:8000
+    depends_on:
+      - db
+    
+
+  nginx:
+    restart: on-failure
+    image: nginx:stable
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - staticfiles:/staticfiles
+      - media:/mediafiles
+    ports:
+      - 80:80
+    depends_on:
+      - app
+
+volumes:
+  staticfiles:
+  media:
