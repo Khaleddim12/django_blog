@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
     'blog_app',
     'members_app',
     'ckeditor',
@@ -149,6 +151,7 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 STORAGES = {
@@ -158,7 +161,11 @@ STORAGES = {
     },
 }
 
-
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dsu6dqeqt',
+    'API_KEY': '276711811861938',
+    'API_SECRET': '4TIOCWz0yAvYKcuCK3M_O503bMM'
+}
 
 
 # Default primary key field type

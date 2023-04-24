@@ -1,7 +1,5 @@
 services:
 
-
-
 #postgres database
   db:
     restart: always
@@ -16,6 +14,7 @@ services:
       - POSTGRES_PASSWORD=postgres
     container_name: postgres_db
 
+#backend application
   app:
     build: .
     container_name: django_container
@@ -32,6 +31,7 @@ services:
       - db
     
 
+#nginx server docker image
   nginx:
     restart: on-failure
     image: nginx:stable
@@ -43,6 +43,7 @@ services:
       - 80:80
     depends_on:
       - app
+
 
 volumes:
   staticfiles:
